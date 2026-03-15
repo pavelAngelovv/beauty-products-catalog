@@ -14,3 +14,8 @@ export interface PaginatedProducts {
   skip: number
   limit: number
 }
+
+export interface ProductCategory {
+  slug: string
+  name: string
+}
