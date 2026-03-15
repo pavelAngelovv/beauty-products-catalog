@@ -24,9 +24,27 @@ function goToPage(page: number) {
 
 const pageNumbers = computed(() => {
   const pages = []
-  for (let i = 1; i <= totalPages.value; i++) {
+
+  let start = currentPage.value - 1
+  let end = currentPage.value + 1
+
+  if (currentPage.value === 1) {
+    start = 1
+    end = 3
+  }
+
+  if (currentPage.value === totalPages.value) {
+    start = totalPages.value - 2
+    end = totalPages.value
+  }
+
+  start = Math.max(1, start)
+  end = Math.min(totalPages.value, end)
+
+  for (let i = start; i <= end; i++) {
     pages.push(i)
   }
+
   return pages
 })
 </script>
@@ -42,6 +60,10 @@ const pageNumbers = computed(() => {
     </div>
 
     <div class="pagination" v-if="totalPages > 1">
+      <button class="page-btn arrow" :disabled="currentPage === 1" @click="goToPage(1)">
+        &#8249;&#8249;
+      </button>
+
       <button
         class="page-btn arrow"
         :disabled="currentPage === 1"
@@ -66,6 +88,14 @@ const pageNumbers = computed(() => {
       >
         &#8250;
       </button>
+
+      <button
+        class="page-btn arrow"
+        :disabled="currentPage === totalPages"
+        @click="goToPage(totalPages)"
+      >
+        &#8250;&#8250;
+      </button>
     </div>
   </main>
 </template>
@@ -74,7 +104,7 @@ const pageNumbers = computed(() => {
 .catalog {
   max-width: 1320px;
   margin: 0 auto;
-  padding: 0 48px 80px;
+  padding: 0 48px 20px;
 }
 
 .catalog-title {
@@ -102,16 +132,16 @@ const pageNumbers = computed(() => {
 }
 
 .page-btn {
-  min-width: 36px;
   height: 36px;
-  padding: 0 10px;
-  border: 1px solid #ddd;
+  padding: 0px;
+  border: none;
   background: #fff;
   font-size: 14px;
-  color: #333;
+  color: #8f8f8f;
   cursor: pointer;
   border-radius: 2px;
   transition: all 0.15s;
+  font-weight: 300;
 }
 
 .page-btn:hover:not(:disabled) {
@@ -120,9 +150,8 @@ const pageNumbers = computed(() => {
 }
 
 .page-btn.active {
-  background: #111;
-  color: #fff;
-  border-color: #111;
+  font-weight: 900;
+  color: #000000
 }
 
 .page-btn:disabled {
@@ -134,5 +163,13 @@ const pageNumbers = computed(() => {
 .page-btn.arrow {
   font-size: 18px;
   line-height: 1;
+}
+
+.page-btn.arrow:nth-child(2) {
+  margin-right: 18px;
+}
+
+.page-btn.arrow:nth-child(6) {
+  margin-left: 18px;
 }
 </style>
