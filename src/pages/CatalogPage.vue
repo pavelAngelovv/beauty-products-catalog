@@ -14,11 +14,14 @@ const {
   fetchProducts,
   fetchByCategory,
   fetchCategories,
+  fetchBySearch,
 } = useProducts()
 
 const currentPage = ref(1)
 const selectedCategory = ref<string | null>(null)
 const isDropdownOpen = ref(false)
+const searchQuery = ref('')
+let searchTimeout: ReturnType<typeof setTimeout> | null = null
 
 onMounted(() => {
   fetchProducts(0, LIMIT)
@@ -38,6 +41,7 @@ function closeDropdown() {
 function selectCategory(slug: string | null) {
   selectedCategory.value = slug
   currentPage.value = 1
+  searchQuery.value = ''
   closeDropdown()
 
   if (slug === null) {
@@ -47,10 +51,29 @@ function selectCategory(slug: string | null) {
   }
 }
 
+function search(query: string) {
+  searchQuery.value = query
+  currentPage.value = 1
+  selectedCategory.value = null
+  isDropdownOpen.value = false
+
+  if (searchTimeout) clearTimeout(searchTimeout)
+
+  searchTimeout = setTimeout(() => {
+    if (query.trim() === '') {
+      fetchProducts(0, LIMIT)
+    } else {
+      fetchBySearch(query, 0, LIMIT)
+    }
+  }, 400)
+}
+
 function goToPage(page: number) {
   if (page < 1 || page > totalPages.value) return
   currentPage.value = page
-  if (selectedCategory.value) {
+  if (searchQuery.value.trim()) {
+    fetchBySearch(searchQuery.value, (page - 1) * LIMIT, LIMIT)
+  } else if (selectedCategory.value) {
     fetchByCategory(selectedCategory.value, (page - 1) * LIMIT, LIMIT)
   } else {
     fetchProducts((page - 1) * LIMIT, LIMIT)
@@ -112,6 +135,13 @@ const pageNumbers = computed(() => {
             </button>
           </div>
         </div>
+        <input
+          class="search-input"
+          type="text"
+          placeholder="Search products..."
+          :value="searchQuery"
+          @input="search(($event.target as HTMLInputElement).value)"
+        />
       </div>
 
       <span class="results-count">( {{ total }} Results )</span>
@@ -253,6 +283,30 @@ const pageNumbers = computed(() => {
 .dropdown-item.active {
   font-weight: 600;
   color: #111;
+}
+
+.search-input {
+  display: flex;
+  align-items: center;
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 13px;
+  color: #111;
+  cursor: text;
+  border-radius: 2px;
+  letter-spacing: 0.02em;
+  width: 220px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #999;
+}
+
+.search-input::placeholder {
+  color: #aaa;
+  font-weight: 300;
 }
 
 .results-count {

@@ -50,6 +50,23 @@ export function useProducts() {
     }
   }
 
+  async function fetchBySearch(query: string, skip = 0, limit = 12) {
+    isLoading.value = true
+    error.value = null
+    try {
+      const res = await fetch(
+        `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}&limit=${limit}&skip=${skip}`,
+      )
+      const data: PaginatedProducts = await res.json()
+      products.value = data.products
+      total.value = data.total
+    } catch (e) {
+      error.value = 'Failed to load products'
+    } finally {
+      isLoading.value = false
+    }
+  }
+
   return {
     products,
     total,
@@ -59,5 +76,6 @@ export function useProducts() {
     fetchCategories,
     fetchProducts,
     fetchByCategory,
+    fetchBySearch,
   }
 }
