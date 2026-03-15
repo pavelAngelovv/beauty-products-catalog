@@ -149,6 +149,9 @@ const pageNumbers = computed(() => {
 
     <div v-if="isLoading" class="state-msg">Loading...</div>
     <div v-else-if="error" class="state-msg error">{{ error }}</div>
+    <div v-else-if="products.length === 0" class="empty-state">
+      <p>No products found</p>
+    </div>
     <div v-else class="product-grid">
       <ProductCard v-for="product in products" :key="product.id" :product="product" />
     </div>
@@ -319,6 +322,29 @@ const pageNumbers = computed(() => {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px 0;
+  color: #888;
+  font-size: 15px;
+}
+
+.empty-btn {
+  margin-top: 12px;
+  padding: 8px 20px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 2px;
+  color: #333;
+}
+
+.empty-btn:hover {
+  border-color: #999;
+  color: #111;
 }
 
 .pagination {
