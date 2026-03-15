@@ -187,13 +187,16 @@ const pageNumbers = computed(() => {
   justify-content: space-between;
   margin-bottom: 24px;
 }
+
 .toolbar-left {
   display: flex;
   gap: 12px;
 }
+
 .dropdown {
   position: relative;
 }
+
 .dropdown-btn {
   display: flex;
   align-items: center;
@@ -208,12 +211,15 @@ const pageNumbers = computed(() => {
   letter-spacing: 0.02em;
   text-transform: capitalize;
 }
+
 .dropdown-btn:hover {
   border-color: #999;
 }
+
 .arrow {
   font-size: 10px;
 }
+
 .dropdown-menu {
   position: absolute;
   left: 0;
@@ -226,6 +232,7 @@ const pageNumbers = computed(() => {
   max-height: 280px;
   overflow-y: auto;
 }
+
 .dropdown-item {
   display: block;
   width: 100%;
@@ -238,13 +245,16 @@ const pageNumbers = computed(() => {
   cursor: pointer;
   text-transform: capitalize;
 }
+
 .dropdown-item:hover {
   background: #f5f5f5;
 }
+
 .dropdown-item.active {
   font-weight: 600;
   color: #111;
 }
+
 .results-count {
   font-size: 13px;
   color: #888;
