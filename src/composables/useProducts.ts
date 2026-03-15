@@ -1,4 +1,4 @@
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import type { Product, PaginatedProducts } from '../types/product'
 
 export function useProducts() {
@@ -23,8 +23,6 @@ export function useProducts() {
             isLoading.value = false
         }
     }
-
-    onMounted(() => fetchProducts())
 
     return { products, total, isLoading, error, fetchProducts }
 }
