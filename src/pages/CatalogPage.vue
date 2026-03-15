@@ -18,6 +18,7 @@ const {
 
 const currentPage = ref(1)
 const selectedCategory = ref<string | null>(null)
+const isDropdownOpen = ref(false)
 
 onMounted(() => {
   fetchProducts(0, LIMIT)
@@ -26,9 +27,18 @@ onMounted(() => {
 
 const totalPages = computed(() => Math.ceil(total.value / LIMIT))
 
+function toggleDropdown() {
+  isDropdownOpen.value = !isDropdownOpen.value
+}
+
+function closeDropdown() {
+  isDropdownOpen.value = false
+}
+
 function selectCategory(slug: string | null) {
   selectedCategory.value = slug
   currentPage.value = 1
+  closeDropdown()
 
   if (slug === null) {
     fetchProducts(0, LIMIT)
@@ -82,10 +92,10 @@ const pageNumbers = computed(() => {
     <div class="toolbar">
       <div class="toolbar-left">
         <div class="dropdown">
-          <button class="dropdown-btn">
+          <button class="dropdown-btn" @click="toggleDropdown">
             {{ selectedCategory ?? 'Filters' }} <span class="arrow">▾</span>
           </button>
-          <div class="dropdown-menu">
+          <div class="dropdown-menu" v-if="isDropdownOpen">
             <button
               :class="['dropdown-item', { active: selectedCategory === null }]"
               @click="selectCategory(null)"
@@ -205,7 +215,6 @@ const pageNumbers = computed(() => {
   font-size: 10px;
 }
 .dropdown-menu {
-  display: none;
   position: absolute;
   left: 0;
   min-width: 180px;
@@ -216,10 +225,6 @@ const pageNumbers = computed(() => {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   max-height: 280px;
   overflow-y: auto;
-}
-.dropdown:hover .dropdown-menu,
-.dropdown:focus-within .dropdown-menu {
-  display: block;
 }
 .dropdown-item {
   display: block;
