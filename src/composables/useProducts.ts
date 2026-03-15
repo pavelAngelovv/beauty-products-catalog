@@ -18,11 +18,11 @@ export function useProducts() {
     }
   }
 
-  async function fetchProducts(skip = 0, limit = 12) {
+  async function fetchFromUrl(url: string) {
     isLoading.value = true
     error.value = null
     try {
-      const res = await fetch(`https://dummyjson.com/products?limit=${limit}&skip=${skip}`)
+      const res = await fetch(url)
       const data: PaginatedProducts = await res.json()
       products.value = data.products
       total.value = data.total
@@ -31,40 +31,22 @@ export function useProducts() {
     } finally {
       isLoading.value = false
     }
+  }
+
+  async function fetchProducts(skip = 0, limit = 12) {
+    await fetchFromUrl(`https://dummyjson.com/products?limit=${limit}&skip=${skip}`)
   }
 
   async function fetchByCategory(slug: string, skip = 0, limit = 12) {
-    isLoading.value = true
-    error.value = null
-    try {
-      const res = await fetch(
-        `https://dummyjson.com/products/category/${slug}?limit=${limit}&skip=${skip}`,
-      )
-      const data: PaginatedProducts = await res.json()
-      products.value = data.products
-      total.value = data.total
-    } catch (e) {
-      error.value = 'Failed to load products'
-    } finally {
-      isLoading.value = false
-    }
+    await fetchFromUrl(
+      `https://dummyjson.com/products/category/${slug}?limit=${limit}&skip=${skip}`,
+    )
   }
 
   async function fetchBySearch(query: string, skip = 0, limit = 12) {
-    isLoading.value = true
-    error.value = null
-    try {
-      const res = await fetch(
-        `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}&limit=${limit}&skip=${skip}`,
-      )
-      const data: PaginatedProducts = await res.json()
-      products.value = data.products
-      total.value = data.total
-    } catch (e) {
-      error.value = 'Failed to load products'
-    } finally {
-      isLoading.value = false
-    }
+    await fetchFromUrl(
+      `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}&limit=${limit}&skip=${skip}`,
+    )
   }
 
   return {
