@@ -16,3 +16,27 @@ const { products, isLoading, error } = useProducts()
         </div>
     </main>
 </template>
+
+<style scoped>
+.catalog {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+}
+
+.catalog-title {
+    font-family: Georgia, serif;
+    font-size: 36px;
+    font-weight: 400;
+    text-align: center;
+    margin: 48px 0 32px;
+    color: #111;
+    letter-spacing: 0.01em;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+</style>
