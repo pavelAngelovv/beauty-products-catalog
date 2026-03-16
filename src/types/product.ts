@@ -6,6 +6,7 @@ export interface Product {
   rating: number
   category: string
   thumbnail: string
+  reviews: { rating: number }[]
 }
 
 export interface PaginatedProducts {

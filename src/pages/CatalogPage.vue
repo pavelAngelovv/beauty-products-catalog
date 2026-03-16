@@ -205,9 +205,8 @@ const pageNumbers = computed(() => {
 }
 
 .catalog-title {
-  font-family: Georgia, serif;
   font-size: 36px;
-  font-weight: 400;
+  font-weight: 600;
   text-align: center;
   margin: 48px 0 32px;
   color: #111;
@@ -321,7 +320,7 @@ const pageNumbers = computed(() => {
 .product-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 34px;
 }
 
 .empty-state {
