@@ -10,7 +10,7 @@ const discountedPrice = computed(() =>
   (props.product.price * (1 - props.product.discountPercentage / 100)).toFixed(2),
 )
 
-function getStars(rating: number) {
+function getStars(rating: number): StarType[] {
   const stars: StarType[] = []
   for (let i = 1; i <= 5; i++) {
     if (rating >= i) stars.push('full')
