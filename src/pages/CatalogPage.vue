@@ -381,4 +381,13 @@ const pageNumbers = computed(() => {
 .page-btn.arrow:nth-child(6) {
   margin-left: 18px;
 }
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .results-count {
+    display: none;
+  }
+}
 </style>
