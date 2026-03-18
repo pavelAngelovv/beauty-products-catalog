@@ -242,6 +242,7 @@ const pageNumbers = computed(() => {
   border-radius: 2px;
   letter-spacing: 0.02em;
   text-transform: capitalize;
+  width: 130px;
 }
 
 .dropdown-btn:hover {
@@ -298,7 +299,7 @@ const pageNumbers = computed(() => {
   cursor: text;
   border-radius: 2px;
   letter-spacing: 0.02em;
-  width: 220px;
+  width: 120px;
   outline: none;
 }
 
@@ -328,22 +329,6 @@ const pageNumbers = computed(() => {
   padding: 80px 0;
   color: #888;
   font-size: 15px;
-}
-
-.empty-btn {
-  margin-top: 12px;
-  padding: 8px 20px;
-  border: 1px solid #ccc;
-  background: #fff;
-  font-size: 13px;
-  cursor: pointer;
-  border-radius: 2px;
-  color: #333;
-}
-
-.empty-btn:hover {
-  border-color: #999;
-  color: #111;
 }
 
 .pagination {
@@ -384,8 +369,9 @@ const pageNumbers = computed(() => {
 }
 
 .page-btn.arrow {
-  font-size: 18px;
+  font-size: 23px;
   line-height: 1;
+  margin-top: -6px;
 }
 
 .page-btn.arrow:nth-child(2) {
