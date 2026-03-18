@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import NavBar from './components/NavBar.vue';
-import CatalogPage from './pages/CatalogPage.vue'
+import NavBar from './components/NavBar.vue'
 </script>
 
 <template>
   <NavBar />
-  <CatalogPage />
+  <RouterView />
 </template>
