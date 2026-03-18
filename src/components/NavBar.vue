@@ -85,7 +85,7 @@ import logoUrl from '../assets/logo.png'
   display: block;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .nav {
     padding: 0 20px;
   }

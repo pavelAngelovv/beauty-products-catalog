@@ -147,8 +147,21 @@ const pageNumbers = computed(() => {
       <span class="results-count">( {{ total }} Results )</span>
     </div>
 
-    <div v-if="isLoading" class="state-msg">Loading...</div>
-    <div v-else-if="error" class="state-msg error">{{ error }}</div>
+    <div v-if="isLoading" class="product-grid">
+      <div v-for="n in LIMIT" :key="n" class="skeleton-card">
+        <div class="skeleton-img"></div>
+        <div class="skeleton-body">
+          <div class="skeleton-line"></div>
+          <div class="skeleton-line short"></div>
+          <div class="skeleton-line"></div>
+          <div class="skeleton-line medium"></div>
+        </div>
+        <div class="skeleton-footer">
+          <div class="skeleton-line"></div>
+        </div>
+      </div>
+    </div>
+    <div v-else-if="error">{{ error }}</div>
     <div v-else-if="products.length === 0" class="empty-state">
       <p>No products found</p>
     </div>
@@ -380,6 +393,57 @@ const pageNumbers = computed(() => {
 
 .page-btn.arrow:nth-child(6) {
   margin-left: 18px;
+}
+
+.skeleton-card {
+  border: 1px solid #f0f0f0;
+  border-radius: 2px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.skeleton-img {
+  width: 100%;
+  aspect-ratio: 1;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 400px;
+  animation: shimmer 1.2s infinite;
+}
+
+.skeleton-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-footer {
+  padding: 12px 16px 16px;
+}
+
+.skeleton-line {
+  height: 12px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 400px;
+  animation: shimmer 1.2s infinite;
+}
+
+.skeleton-line.short {
+  width: 35%;
+}
+
+.skeleton-line.medium {
+  width: 55%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
 }
 
 @media (max-width: 768px) {
